@@ -1,0 +1,76 @@
+public class Item {
+    private String name;
+    private int quantity;
+    private double price;
+
+    public Item(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    // Getters and setters for name, quantity, and price
+
+    @Override
+    public String toString() {
+        return "Item: " + name + ", Quantity: " + quantity + ", Price: $" + price;
+    }
+}
+InventoryManager Class (Main):
+java
+Copy code
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class InventoryManager {
+    private List<Item> inventory;
+
+    public InventoryManager() {
+        this.inventory = new ArrayList<>();
+    }
+
+    public void addItem(Item item) {
+        inventory.add(item);
+    }
+
+    public void displayInventory() {
+        System.out.println("Inventory Items:");
+        for (Item item : inventory) {
+            System.out.println(item);
+        }
+    }
+
+    public void removeItem(String itemName) {
+        for (Item item : inventory) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                inventory.remove(item);
+                System.out.println(itemName + " removed from inventory.");
+                return;
+            }
+        }
+        System.out.println(itemName + " not found in inventory.");
+    }
+
+    public static void main(String[] args) {
+        InventoryManager manager = new InventoryManager();
+        Scanner scanner = new Scanner(System.in);
+
+        // Adding items to inventory
+        manager.addItem(new Item("Product A", 10, 25.0));
+        manager.addItem(new Item("Product B", 15, 30.0));
+
+        // Displaying inventory
+        manager.displayInventory();
+
+        // Removing an item (based on user input)
+        System.out.println("\nEnter item name to remove: ");
+        String itemToRemove = scanner.nextLine();
+        manager.removeItem(itemToRemove);
+
+        // Displaying updated inventory
+        manager.displayInventory();
+
+        scanner.close();
+    }
+}
